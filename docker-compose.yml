@@ -1,0 +1,22 @@
+creator-rails:
+    image: rails:5.0.0.1
+    hostname: creatorRails
+    container_name: creatorRails
+    ports:
+        - "3000:3000"
+    volumes:
+        - ./src:/usr/src/app
+    working_dir: /usr/src/app
+    links:
+        - creator-postgresql
+    command: [ "rails", "server", "-b", "0.0.0.0" ]
+    entrypoint: ./postinstall.sh
+creator-postgresql:
+    image: postgres:9.6
+    hostname: creatorPostgres
+    container_name: creatorPostgres
+    ports:
+        - "5432"
+    environment:
+        POSTGRES_PASSWORD: password
+        POSTGRES_USER: creator
